@@ -1,6 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: rgb(229, 244, 239);
     font-family: Kalam;
+    height: 100vmin;
 }
 
 h1 {
@@ -9,6 +14,9 @@ h1 {
     text-align: center;
     margin-top: 1vmin;
     margin-bottom: 1vmin;
+    display: flex;
+    justify-content: center; /* Centering .card-inner horizontally */
+    align-items: center;
 }
 
 .game-info-container {
@@ -24,50 +32,71 @@ h1 {
     color:rgb(132, 26, 4);
 }
 
-.game-container {
-    display: grid;
-    grid-gap: 1vmin;
-    grid-template-columns: repeat(4, 10vmin);
-    justify-content: space-around;
-    margin: 5vmin 50vmin;
+.card-container {
+  display: flex;
+  justify-content: center; /* Centering .card-inner horizontally */
+  align-items: center;
+  padding-top: 10vmin;
 }
 
-.card {
-    height: 15vmin;
-    width: 12vmin;
+.game-container {
+    display: grid;
+    gap: 2vmin;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    align-items: center;
+}
+
+.game-container > .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vmin;
+    width: 10vmin;
 }
 
 .card-inner {
-    width: 100%;
-    height: 100%;
+    height: 10vmin;
+    width: 10vmin;
     position: relative;
-}
-
-.card:hover .card-inner {
-    transform: rotateY(180deg);
-}
-
-.card-back {
-    width: 110%;
-    height: 90%;
-    position: absolute;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.card-back {
+.card .card-front {
+    height: 10vmin;
+    width: 10vmin;
+    position: absolute;
+    visibility: hidden;
+}
+
+.card.flipped .card-front {
+    visibility: visible;
+}
+
+.card.flipped .card-back {
+    visibility: hidden;
+}
+
+.card .card-back {
+    height: 10vmin;
+    width: 10vmin;
+    position: absolute;
     transform: rotateY(180deg);
+    visibility: visible;
 }
 
 .image {
-    width: 100%;
-    height: 120%;
-    top: 0;
-    left: 0;
-    position: absolute;
+    height: 10vmin;
+    width: 10vmin;
 }
 
 .replay-button {
     display: none;
+}
+
+img {
+    height: 10vmin;
+    width: 10vmin;
 }
