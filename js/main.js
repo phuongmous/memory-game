@@ -8,7 +8,7 @@ const cardFronts = document.querySelectorAll('.card-front');
 
 /*----- app's state (variables) -----*/
 const state = {
-time: 20,
+time: 5,
 score: 0,
 firstCardSrc: null,
 firstCard: null,
@@ -23,24 +23,13 @@ timeRemaining.innerText = state.time;
 /*----- event listeners -----*/
 createCardImages();
 
-//addEventListener when clicking on start button
-// the cards are clickable only after the game start button is clicked => game start button is hidden
-
 //addEventListener when clicking on a card
-cards.forEach(card => card.addEventListener('click', function cardClickHandler(event) {
-    const currentCard = this;
-    if ((!card.classList.contains('matched'))) {
-        card.classList.add('flipped');
-    } else {
-        return;
-    };
-    checkForMatch(currentCard)}
-    ));
 
-startButton.addEventListener('click', countdownTimer);
+//addEventListener when clicking on start button
+//the cards are clickable only after the game start button is clicked => game start button is hidden
 
 //addEventListener when clicking on replay button
-//replayButton.addEventListener('click', resetBoard);
+
 
 /*----- functions -----*/
 // give random images to cardFronts
@@ -52,12 +41,42 @@ function createCardImages() {
                     'sock.png', 'sweets.png', 'tree.png'];
     const imageArray = [...images];
     imageArray.sort(() => Math.random() - 0.5);
-    console.log(imageArray[0])
     cardFronts.forEach((cardFront, index) => {
         let img = document.createElement('img');
         img.src = `./imgs/${imageArray[index]}`;
         cardFront.appendChild(img)
     });
+}
+
+function cardClickHandler() {
+    const currentCard = this;
+    if ((!state.gameStarted || this.classList.contains('matched'))) {
+        return;
+    }
+    this.classList.add('flipped');
+    checkForMatch(currentCard);
+}
+
+cards.forEach(card => card.addEventListener('click', cardClickHandler, false));
+
+startButton.addEventListener('click', (event) => {
+    state.gameStarted = true;
+    startButton.style.display = 'none';
+    replayButton.style.display = 'none';
+    countdownTimer();
+    cards.forEach(card => card.addEventListener('click', cardClickHandler));
+});
+
+function countdownTimer() {
+    let timer = setInterval(function() {
+        timeRemaining.innerHTML = state.time;
+        state.time--;
+        if (state.time < 0) {
+            clearInterval(timer);
+            replayButton.style.display = 'block';
+            cards.forEach(card => card.removeEventListener('click', cardClickHandler)); // when the time = 0 => the cards are unable to clicked
+        }
+    }, 1000);
 }
 
 function checkForMatch(currentCard) {
@@ -90,20 +109,29 @@ function checkForMatch(currentCard) {
      }
 }
 
-function countdownTimer() {
-    if (state.gameStarted == true) return;
-    state.gameStarted = true;
-    let timer = setInterval(function() {
-        timeRemaining.innerHTML = state.time;
-        state.time--;
-        if (state.time < 0) {
-            clearInterval(timer);
-            replayButton.style.display = 'block';
-        }
-    }, 1000);
-}
+replayButton.addEventListener('click', resetBoard)
 
-// when the time = 0 => the cards are unable to clicked
-// click on replay button, the board resets and shuffle the cards
-// => the game start buttn is shown & replay button is hidden
-// write function resetBoard
+function resetBoard() {
+    state.time = 5;
+    state.score = 0;
+    state.firstCardSrc = null;
+    state.firstCard = null;
+    state.secondCardSrc = null;
+    state.gameStarted = false;
+    timeRemaining.innerText = state.time;
+    scoreDisplay.textContent = state.score;
+    replayButton.style.display = 'none';
+    startButton.style.display = 'block';
+    cards.forEach(card => {
+        card.classList.remove('flipped', 'matched');
+    });
+    cardFronts.forEach(cardFront => {
+        cardFront.getElementsByTagName("img");
+        cardFront.removeChild(cardFront.getElementsByTagName("img")[0]);
+    });
+    createCardImages();
+    cards.forEach(card => {
+        card.removeEventListener('click', cardClickHandler);
+        card.addEventListener('click', cardClickHandler, false);
+    });
+}
