@@ -41,7 +41,7 @@ h1 {
 
 .game-container {
     display: grid;
-    gap: 1vmin;
+    gap: 2vmin;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     align-items: center;
@@ -118,8 +118,7 @@ img {
   font-weight: 600;
   font-size: 3vmin;
   font-family: Kalam;
-  padding: 2.5vmin;
-  line-height: 3px;
+  padding: 1.5vmin 2vmin;
   text-align: center;
   text-decoration: none;
   user-select: none;
@@ -146,4 +145,8 @@ img {
     min-width: 120px;
     padding: 0 25px;
   }
+}
+
+.disabled {
+    pointer-events: none;
 }
