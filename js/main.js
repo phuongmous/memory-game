@@ -8,12 +8,13 @@ const cardFronts = document.querySelectorAll('.card-front');
 
 /*----- app's state (variables) -----*/
 const state = {
-time: 5,
+time: 20,
 score: 0,
 firstCardSrc: null,
 firstCard: null,
 secondCardSrc: null,
-gameStarted: false
+gameStarted: false,
+cardIsAllowedToFlip: true,
 };
 
 timeRemaining.innerText = state.time;
@@ -21,24 +22,18 @@ timeRemaining.innerText = state.time;
 
 
 /*----- event listeners -----*/
-createCardImages();
-
-//addEventListener when clicking on a card
-
-//addEventListener when clicking on start button
-//the cards are clickable only after the game start button is clicked => game start button is hidden
-
-//addEventListener when clicking on replay button
 
 
 /*----- functions -----*/
+
 // give random images to cardFronts
+createCardImages();
 
 function createCardImages() {
     const images = ['email.png', 'gingerbread.png', 'jumper.png', 'reindeer.png',
-                    'snowman.png', 'sock.png', 'sweets.png', 'tree.png', 'email.png',
-                    'gingerbread.png', 'jumper.png', 'reindeer.png', 'snowman.png',
-                    'sock.png', 'sweets.png', 'tree.png'];
+                    'snowman.png', 'sock.png', 'sweets.png', 'tree.png',
+                    'email.png', 'gingerbread.png', 'jumper.png', 'reindeer.png',
+                    'snowman.png', 'sock.png', 'sweets.png', 'tree.png'];
     const imageArray = [...images];
     imageArray.sort(() => Math.random() - 0.5);
     cardFronts.forEach((cardFront, index) => {
@@ -48,16 +43,7 @@ function createCardImages() {
     });
 }
 
-function cardClickHandler() {
-    const currentCard = this;
-    if ((!state.gameStarted || this.classList.contains('matched'))) {
-        return;
-    }
-    this.classList.add('flipped');
-    checkForMatch(currentCard);
-}
-
-cards.forEach(card => card.addEventListener('click', cardClickHandler, false));
+// cards.forEach(card => card.addEventListener('click', cardClickHandler, false));
 
 startButton.addEventListener('click', (event) => {
     state.gameStarted = true;
@@ -79,20 +65,30 @@ function countdownTimer() {
     }, 1000);
 }
 
+function cardClickHandler() {
+    if ((!state.gameStarted || this.classList.contains('matched') || !state.cardIsAllowedToFlip)) {
+        return;
+    }
+    const currentCard = this;
+    this.classList.add('flipped');
+    checkForMatch(currentCard);
+}
+
 function checkForMatch(currentCard) {
-    console.log('currentCard', currentCard);
     currentCardImageSource = currentCard.querySelector('img[src]').getAttribute('src');
-    if (state.firstCardSrc == null) {
+    if (state.firstCardSrc === null) {
         state.firstCardSrc = currentCardImageSource;
         state.firstCard = currentCard;
     } else {
+        state.cardIsAllowedToFlip = false;
         state.secondCardSrc = currentCardImageSource;
         if (state.firstCardSrc === state.secondCardSrc) {
             state.score += 1;
             scoreDisplay.textContent = state.score;
             state.firstCard.classList.add('matched');
             currentCard.classList.add('matched');
-            state.firstCard = null;
+            state.cardIsAllowedToFlip = true;
+            // state.firstCard = null;
             state.firstCardSrc = null;
             console.log('firstCardSrc', state.firstCardSrc);
             }
@@ -102,17 +98,17 @@ function checkForMatch(currentCard) {
                 state.firstCard.classList.remove('flipped');
                 state.firstCardSrc = null;
                 state.secondCardSrc = null;
-                state.firstCard = null;
-              }, 1000);  
+                state.cardIsAllowedToFlip = true;
+                // state.firstCard = null;
+              }, 500);  
             }  
-        
-     }
+        }
 }
 
 replayButton.addEventListener('click', resetBoard)
 
 function resetBoard() {
-    state.time = 5;
+    state.time = 20;
     state.score = 0;
     state.firstCardSrc = null;
     state.firstCard = null;
@@ -121,7 +117,7 @@ function resetBoard() {
     timeRemaining.innerText = state.time;
     scoreDisplay.textContent = state.score;
     replayButton.style.display = 'none';
-    startButton.style.display = 'block';
+    startButton.style.display = 'none';
     cards.forEach(card => {
         card.classList.remove('flipped', 'matched');
     });
@@ -130,8 +126,9 @@ function resetBoard() {
         cardFront.removeChild(cardFront.getElementsByTagName("img")[0]);
     });
     createCardImages();
+    countdownTimer();
+    state.gameStarted = true;
     cards.forEach(card => {
-        card.removeEventListener('click', cardClickHandler);
-        card.addEventListener('click', cardClickHandler, false);
+        card.addEventListener('click', cardClickHandler());
     });
 }

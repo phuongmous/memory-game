@@ -3,13 +3,13 @@
 }
 
 body {
-    background-color: rgb(234, 234, 210);
+    background-color: rgb(250, 235, 203);
     font-family: Kalam;
     height: 100vmin;
 }
 
 h1 {
-    color: rgb(52, 71, 32);
+    color: rgb(71, 81, 30);
     font-size: 10vmin;
     text-align: center;
     margin-top: 1vmin;
@@ -20,7 +20,7 @@ h1 {
 }
 
 .game-info-container {
-    margin-top: 5vmin;
+    margin-top: 1vmin;
     display: flex;
     justify-content: space-around;
 }
@@ -29,7 +29,7 @@ h1 {
     font-size: 5vmin;
     text-align: center;
     font-size: 5vmin;
-    color:rgb(146, 0, 17);
+    color:rgb(190, 105, 104);
 }
 
 .card-container {
@@ -51,6 +51,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 10vmin;
+    width: 10vmin;
+}
+
+
+.image {
     height: 10vmin;
     width: 10vmin;
 }
@@ -87,36 +93,57 @@ h1 {
     visibility: visible;
 }
 
-.image {
-    height: 10vmin;
-    width: 10vmin;
-}
-
-.start-button, .replay-button {
-    font-size: 3vmin;
-    font-weight: bold;
-    border: none;
-    background-color:rgb(52, 71, 32);
-    border-radius: 10%;
-    color: rgb(234, 234, 210);
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.replay-game {
-    display: grid;
-    align-items: center;
-    padding-top: 5vmin;
-    height: 5vmin;
-    width: 5vmin;
-}
-
-.start-button:hover, .replay-button:hover {
-    background-color:rgb(251, 236, 152);
-    color: rgb(52, 71, 32);
-}
-
 img {
     height: 10vmin;
     width: 10vmin;
+    position: absolute;
+}
+
+.replay-game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10vmin;
+    width: 100%;
+}
+
+.start-button, .replay-button {
+  background-color: rgb(220, 211, 250);
+  border: 0.3vmin solid #422800;
+  border-radius: 1vmin;
+  box-shadow: #422800 0.5vmin 0.5vmin 0 0;
+  color: rgb(28, 32, 12);
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 3vmin;
+  font-family: Kalam;
+  padding: 2.5vmin;
+  line-height: 3px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.replay-button {
+    display: none;
+}
+
+.start-button:hover, .replay-button:hover {
+  background-color: rgb(252, 252, 252);
+  color: rgb(28, 32, 12);
+}
+
+.start-button:active, .replay-button:active {
+  box-shadow: #422800 0.5vmin 0.5vmin 0 0;
+  transform: translate(0.5vmin, 0.5vmin);
+}
+
+@media (min-width: 768px) {
+    .start-button, .replay-button {
+    min-width: 120px;
+    padding: 0 25px;
+  }
 }
