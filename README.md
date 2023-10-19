@@ -30,7 +30,7 @@ To play the Memory Cards Game, simply click the "START GAME" button and the time
 
 #### Game Controls
 - Click on cards to flip them and reveal their images.
-+ Click the "START GAME" button to begin the game.
++ Click the "START GAME" button to begin the game and the background music will be played automatically.
 - Click the "REPLAY GAME" button to reset the game.
 + Click the music icon to stop the background music
 

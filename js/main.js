@@ -73,7 +73,7 @@ function startCountdownTimer() {
     let timer = setInterval(function() {
         timeRemaining.innerHTML = state.time;
         state.time--;
-        if (state.time < 0 || scoreDisplay.textContent === '30') {
+        if (state.time < 0 || scoreDisplay.textContent === '8') {
             clearInterval(timer);
             state.gameisEnded = true;
             replayButton.style.display = 'block';
@@ -111,18 +111,16 @@ function checkForMatch(currentCard) {
         // if first card is selected
         state.secondCardSrc = currentCardImageSrc;
         state.cardIsAllowedToFlip = false;
-        state.firstCard.classList.remove('disabled');
         if (state.firstCardSrc === state.secondCardSrc) {
             // compare cards
             scoreDisplay.textContent = state.score += 1;
-
             state.firstCard.classList.add('matched');
             currentCard.classList.add('matched');
             state.cardIsAllowedToFlip = true;
             // allow clicking other cards
             state.firstCardSrc = null;
             // clear the first card
-            if (scoreDisplay.textContent === '30') {
+            if (scoreDisplay.textContent === '8') {
                 message.innerText = 'Congrats! You won';
             }
             }
@@ -133,7 +131,7 @@ function checkForMatch(currentCard) {
                     //prevent cards from flipping when the game is ended
                     currentCard.classList.remove('flipped');
                     state.firstCard.classList.remove('flipped');
-                    state.firstCard.classList.remove('disabled');
+                    state.firstCard.classList.remove('disabled'); //allow clicking the 1st card
                 }
                 state.firstCardSrc = null;
                 state.secondCardSrc = null;
@@ -160,7 +158,6 @@ function resetBoard() {
 function hideControlButtons() {
     startButton.style.display = 'none';
     replayButton.style.display = 'none';
-    // winMessage.style.display = 'none';
 }
 
 function playMusic() {
