@@ -73,7 +73,7 @@ function startCountdownTimer() {
     let timer = setInterval(function() {
         timeRemaining.innerHTML = state.time;
         state.time--;
-        if (state.time < 0 || scoreDisplay.textContent === '8') {
+        if (state.time < 0 || scoreDisplay.textContent === '30') {
             clearInterval(timer);
             state.gameisEnded = true;
             replayButton.style.display = 'block';
@@ -122,7 +122,7 @@ function checkForMatch(currentCard) {
             // allow clicking other cards
             state.firstCardSrc = null;
             // clear the first card
-            if (scoreDisplay.textContent === '8') {
+            if (scoreDisplay.textContent === '30') {
                 message.innerText = 'Congrats! You won';
             }
             }

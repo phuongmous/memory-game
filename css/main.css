@@ -21,16 +21,16 @@ h1 {
 
 .stop-music {
     display: flex;
-    margin: 0px auto 5px 0px;
+    margin: 0px auto 3vmin 0px;
 }
 
 #stop-music-image {
-    width: 10px;
-    height: 10px;
+    width: 5vmin;
+    height: 5vmin;
 }
 
 .game-info-container {
-    margin: 5vmin;
+    margin: 3vmin;
     display: flex;
     justify-content: space-around;
 }
@@ -46,7 +46,7 @@ h1 {
   display: flex;
   justify-content: center; /* Centering .card-inner horizontally */
   align-items: center;
-  padding-top: 7vmin;
+  padding-top: 5vmin;
 }
 
 .game-container {
@@ -109,15 +109,11 @@ img {
     position: absolute;
 }
 
-.stop-music-button {
-
-}
-
 .replay-game {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 10vmin;
+    padding-top: 7vmin;
     width: 100%;
 }
 
@@ -168,9 +164,8 @@ img {
 .message {
     text-align: center;
     font-style: italic;
-    border-radius: 10px;
-    font-size: 12px;
+    font-size: 5vmin;
     color: transparent;
     text-transform: uppercase;
-    -webkit-text-stroke: 0.8px rgb(12, 12, 12);
+    -webkit-text-stroke: 0.7px rgb(12, 12, 12);
 }
