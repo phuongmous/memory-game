@@ -4,6 +4,8 @@ const timeRemaining = document.getElementById('time-remaining');
 const scoreDisplay = document.getElementById('score');
 const startButton = document.querySelector('.start-button');
 const replayButton = document.querySelector('.replay-button');
+const stopMusicImage = document.getElementById('stop-music-image');
+const message = document.querySelector('.message');
 
 /*----- app's state (variables) -----*/
 const initialState = {
@@ -30,7 +32,9 @@ startButton.addEventListener('click', (event) => {
     playMusic();
 });
 
-replayButton.addEventListener('click', resetBoard)
+replayButton.addEventListener('click', resetBoard);
+
+stopMusicImage.addEventListener('click', stopMusic);
 
 /*----- functions -----*/
 
@@ -69,7 +73,7 @@ function startCountdownTimer() {
     let timer = setInterval(function() {
         timeRemaining.innerHTML = state.time;
         state.time--;
-        if (state.time < 0) {
+        if (state.time < 0 || scoreDisplay.textContent === '8') {
             clearInterval(timer);
             state.gameisEnded = true;
             replayButton.style.display = 'block';
@@ -102,22 +106,25 @@ function checkForMatch(currentCard) {
         // if there is no card selected
         state.firstCardSrc = currentCardImageSrc;
         state.firstCard = currentCard;
-        //set the first card to current selected one
+        state.firstCard.classList.add('disabled'); // prevent 2 clicks on first card 
     } else {
         // if first card is selected
         state.secondCardSrc = currentCardImageSrc;
         state.cardIsAllowedToFlip = false;
+        state.firstCard.classList.remove('disabled');
         if (state.firstCardSrc === state.secondCardSrc) {
-            // compare card
+            // compare cards
             scoreDisplay.textContent = state.score += 1;
 
             state.firstCard.classList.add('matched');
             currentCard.classList.add('matched');
-
             state.cardIsAllowedToFlip = true;
             // allow clicking other cards
             state.firstCardSrc = null;
             // clear the first card
+            if (scoreDisplay.textContent === '8') {
+                message.innerText = 'Congrats! You won';
+            }
             }
         else {
             // cards are not matched
@@ -126,11 +133,11 @@ function checkForMatch(currentCard) {
                     //prevent cards from flipping when the game is ended
                     currentCard.classList.remove('flipped');
                     state.firstCard.classList.remove('flipped');
+                    state.firstCard.classList.remove('disabled');
                 }
                 state.firstCardSrc = null;
                 state.secondCardSrc = null;
                 state.cardIsAllowedToFlip = true;
-                // state.firstCard = null;
               }, 500);  
             }  
         }
@@ -140,12 +147,12 @@ function resetBoard() {
     state = {...initialState, gameStarted: true}; //reset state
     timeRemaining.innerText = state.time;
     scoreDisplay.textContent = state.score;
+    message.innerText = '';
     hideControlButtons()
     cards.forEach(card => {
         card.classList.remove('flipped', 'matched', 'disabled');
         card.querySelector('img').remove();
     });
-    hideControlButtons();
     createCardImages();
     startCountdownTimer();
 }
@@ -153,9 +160,15 @@ function resetBoard() {
 function hideControlButtons() {
     startButton.style.display = 'none';
     replayButton.style.display = 'none';
+    // winMessage.style.display = 'none';
 }
 
 function playMusic() {
-    let audio = document.querySelector('audio');
+    audio = document.querySelector('audio');
+    audio.volume = 0.1;
     audio.play();
+    }
+
+function stopMusic() {
+    audio.pause();
 }

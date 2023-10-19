@@ -19,8 +19,18 @@ h1 {
     align-items: center;
 }
 
+.stop-music {
+    display: flex;
+    margin: 0px auto 5px 0px;
+}
+
+#stop-music-image {
+    width: 10px;
+    height: 10px;
+}
+
 .game-info-container {
-    margin-top: 1vmin;
+    margin: 5vmin;
     display: flex;
     justify-content: space-around;
 }
@@ -36,7 +46,7 @@ h1 {
   display: flex;
   justify-content: center; /* Centering .card-inner horizontally */
   align-items: center;
-  padding-top: 10vmin;
+  padding-top: 7vmin;
 }
 
 .game-container {
@@ -99,6 +109,10 @@ img {
     position: absolute;
 }
 
+.stop-music-button {
+
+}
+
 .replay-game {
     display: flex;
     align-items: center;
@@ -149,4 +163,14 @@ img {
 
 .disabled {
     pointer-events: none;
+}
+
+.message {
+    text-align: center;
+    font-style: italic;
+    border-radius: 10px;
+    font-size: 12px;
+    color: transparent;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.8px rgb(12, 12, 12);
 }
